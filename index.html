@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hassan Ettahiri</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/magic-grid/dist/magic-grid.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/135216101?s=400&u=be4ab35942b2c7621e766c376d7b6d04ec893b5a&v=4" type="image/png"></head>
+
+  <body>
+    <div id="loading">
+      <div id="spinner"></div>
+    </div>
+    <div id="profile">
+      <div id="profile_img" style="background: url('./IMG-20210725-WA0036.jpg') center;"></div>
+      <div id="username"><span style="display:block;">Hassan Ettahiri</span><a href="https://github.com/hassan-ettahiri" target="_blank">@hassan-ettahiri</a></div>
+      <div id="userbio" style="display: block;">University Ibn Zohr <br><br> Software Enginner Student <br><br> Passionate about BackEnd Web Development 
+              </div>
+      <div id="about">
+                <span style="display:none;"><i class="fas fa-users"></i> &nbsp; null</span>
+                <span style="display:none;"><i class="fas fa-envelope"></i> &nbsp; null</span>
+                <span style="display:none;"><i class="fas fa-link"></i> &nbsp; <a href=""></a></span>
+                <span style="display:none;"><i class="fas fa-map-marker-alt"></i> &nbsp;&nbsp; null</span>
+                <span style="display:none;"><i class="fas fa-user-tie"></i> &nbsp;&nbsp; Available for hire</span>
+                <div class="socials">
+                <span style="display:none !important;"><a href="https://www.twitter.com/null" target="_blank" class="socials"><i class="fab fa-twitter"></i></a></span>
+                <span ><a href="https://drive.google.com/file/d/1HDZTp2O08Vb_OP3dryjF-i4TKe1GsXvW/view?usp=sharing" target="_blank" class="socials">View my Resume Online!</a></span>
+                <span >LinkedIn: <a href="https://www.linkedin.com/in/hassan-ettahiri/" target="_blank" class="socials">@hassan-ettahiri</a></span>
+                </div>
+                </div>
+    </div>
+    <div id="display">
+      <div id="work">
+        <h1>ABOUT ME: </h1>
+        <p>I am Hassan Ettahiri, a dedicated software engineer with a fervent enthusiasm for tackling intellectual challenges. Endowed with a comprehensive set of analytical, logical, and programming skills, I am resolute in my pursuit of academic excellence. My journey is fueled by a relentless commitment to unraveling intricate problems and crafting innovative solutions. Embracing every opportunity to expand my knowledge and expertise, I am steadfast in my determination to push the boundaries of what is possible in the realm of software engineering.
+        </p>
+        <h1>MY PROJECTS: </h1>
+        <div class="projects" id="work_section">
+                    
+        </div>
+      </div>
+    </div>
+    <script>
+        setTimeout(function() {
+          document.getElementById("loading").classList.add("animated");
+          document.getElementById("loading").classList.add("fadeOut");
+          setTimeout(function() {
+            document.getElementById("loading").classList.remove("animated");
+            document.getElementById("loading").classList.remove("fadeOut");
+            document.getElementById("loading").style.display = "none";
+          }, 800);
+        }, 1500);
+        
+    const username = 'hassan-ettahiri';
+    const apiUrl = `https://api.github.com/users/${username}/repos`;
+
+    fetch(apiUrl
+        )
+        .then(response => response.json())
+        .then(projects => {
+            const container = document.getElementById('work_section');
+            container.innerHTML = ''; // Clear previous content
+
+            projects.forEach(project => {
+                if (project.language === null || project.language === "null"){
+                }else{
+                  const projectElement = document.createElement('a');
+                  projectElement.href = project.html_url;
+                  projectElement.target = "_blank";
+                  projectElement.innerHTML = `
+                      <section>
+                          <div class="section_title">${project.name}</div>
+                          <div class="about_section">
+                              <span style="display:block;">${project.description || 'No description available'}</span>
+                          </div>
+                          <div class="bottom_section">
+                              <span style="display:inline-block;"><i class="fas fa-code"></i>&nbsp; ${project.language}</span>
+                              <span><i class="fas fa-star"></i>&nbsp; ${project.stargazers_count}</span>
+                              <span><i class="fas fa-code-branch"></i>&nbsp; ${project.forks_count}</span>
+                          </div>
+                      </section>
+                  `;
+                  container.appendChild(projectElement);
+              }
+            });
+        })
+        .catch(error => console.error('Error fetching projects:', error)); 
+  </script>
+  
+
+</body></html>
